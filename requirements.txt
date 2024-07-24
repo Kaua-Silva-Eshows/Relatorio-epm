@@ -1,0 +1,10 @@
+numpy
+pandas
+streamlit==1.34.0
+matplotlib
+monday
+mysql-connector-python
+xlsxwriter
+streamlit_echarts
+streamlit-aggrid
+streamlit-option-menu
