@@ -1,40 +1,71 @@
 import streamlit as st
-from utils.user import login
+from utils.user import *
+from utils.jwt_utils import *
+import requests
 from utils.components import hide_sidebar
 
 
-def handle_login(userName, password):
-    #user data deve conter o usuario
-    if "@eshows.com.br" not in userName:
-        st.error('Usuário fora do domínio Eshows! Tente com seu email @eshows.')
-        return
-    if user_data := login(userName, password):
-        st.session_state['loggedIn'] = True
-        st.session_state['user_data'] = user_data
-    else:
+
+def initialize_session_state():
+    if 'jwt_token' not in st.session_state:
+        st.session_state['jwt_token'] = None
         st.session_state['loggedIn'] = False
-        st.error("Email ou senha inválidos!!")
+        st.session_state['user_data'] = None
+        st.session_state['page'] = 'login'
+
+def authenticate(userName: str, userPassword: str):
+    login_data = {
+        "username": userName,
+        "password": userPassword,
+        "loginSource": 1,
+    }
+    
+    response = requests.post('https://api.eshows.com.br/v1/Security/Login', json=login_data).json()
+
+    if "error" in response:
+        return None
+    elif response["data"]["success"]:
+        return response
+    else:
+        return None
+
+def main():
+
+    if st.session_state['jwt_token']:
+        user_data = decode_jwt(st.session_state['jwt_token'])
+        if user_data:
+            st.session_state['user_data'] = user_data
+            st.session_state['loggedIn'] = True
+        else:
+            st.session_state['jwt_token'] = None
+            st.session_state['loggedIn'] = False
+
+    if not st.session_state['loggedIn']:
+        show_login_page()
+        st.stop()
+    else:
+        st.switch_page("pages/Home.py")
 
 def show_login_page():
     col1, col2 = st.columns([4,1])
     col2.image("./assets/imgs/eshows-logo.png", width=100)
     col1.write("## Central do artista e contratante")
     userName = st.text_input(label="", value="", placeholder="Email")
-    password = st.text_input(label="", value="", placeholder="Senha", type="password")
-    st.button("Login", on_click=handle_login, args=(userName, password))
+    userPassword = st.text_input(label="", value="", placeholder="Senha", type="password")
+    if st.button("login"):
+        user_data = authenticate(userName, userPassword)
+        if user_data:
+            st.session_state['jwt_token'] = encode_jwt(user_data)
+            st.session_state['user_data'] = user_data
+            st.session_state['loggedIn'] = True
+            st.session_state['page'] = 'pages/Home.p'
+            st.experimental_rerun()
 
-def main():
-    if 'loggedIn' not in st.session_state:
-        st.session_state['loggedIn'] = False
-        st.session_state['user_data'] = None
-    
-    if not st.session_state['loggedIn']:
-        show_login_page()
-        st.stop()
-    else:
-        st.switch_page("pages/Home.py")
-    
+        else:
+            st.error("Email ou senha inválidos!")
+            
 if __name__ == '__main__':
+    initialize_session_state()
     st.set_page_config(
     page_title="Login | Relatórios Eshows",
     page_icon="./assets/imgs/eshows-logo100x100.png",
