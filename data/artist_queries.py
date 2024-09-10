@@ -81,7 +81,7 @@ def artist_showhistory_old_show_history(id):
         AND A.NOME IS NOT NULL 
         AND P.DATA_INICIO IS NOT NULL
         AND DATE(P.DATA_INICIO) <= CURDATE()
-        AND P.DATA_INICIO > DATE_SUB(CURDATE(), INTERVAL 120 DAY)
+        AND P.DATA_INICIO > DATE_SUB(CURDATE(), INTERVAL 364 DAY)
         AND A.ID = {id}
 
     ORDER BY P.DATA_INICIO DESC;
