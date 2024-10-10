@@ -1,7 +1,7 @@
 import streamlit as st
 import jwt
 import datetime
-from secrets import *
+import secrets
 
 SECRET_KEY = st.secrets["general"]["SECRET_KEY"]
 

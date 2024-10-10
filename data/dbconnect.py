@@ -19,8 +19,6 @@ def execute_query(query):
     conn = get_mysql_connection()
     cursor = conn.cursor()
     try:
-        cursor.execute("SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;")
-        
         cursor.execute(query)
         
         # Verifique se cursor.description não é None
@@ -47,7 +45,7 @@ def execute_query(query):
         cursor.close()
         conn.close()
 
-def get_dataframe_from_query(consulta):
+def getDfFromQuery(consulta):
     result, column_names = execute_query(consulta)
     if result is None or column_names is None:
         return pd.DataFrame() 
