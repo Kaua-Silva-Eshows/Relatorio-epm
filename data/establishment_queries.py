@@ -632,7 +632,7 @@ def establishment_finances_invoices_shows(id):
 def establishment_finances_payment_slip(id):
     return getDfFromQuery(f"""
     SELECT
-PAF.ID,
+PAF.ID AS 'ID BOLETO',
 C.NAME AS Casa,
 TF.DATA_INICIO,
 TF.DATA_FIM,
