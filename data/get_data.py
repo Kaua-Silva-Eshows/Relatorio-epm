@@ -38,6 +38,7 @@ def initialize_data(id):
         'ReportByOccurenceAndDate': pd.DataFrame(),
         'GeneralInformationAndFinance': pd.DataFrame(),
         'OperationalPerformace': pd.DataFrame(),
+        'artistAdvance' : pd.DataFrame(),
         'id':id
     }
 
@@ -85,6 +86,12 @@ def get_artist_data_Finance(data, user_id, id):
         data['financesPaymentSlipShows'] = financesPaymentSlipShows
     except Exception as e:
         data['financesPaymentSlipShows'] = pd.DataFrame()
+
+    try:
+        artistAdvance = artist_advance(id)
+        data['artistAdvance'] = artistAdvance
+    except Exception as e:
+        data['artistAdvance'] = pd.DataFrame()
 
     return data
 
