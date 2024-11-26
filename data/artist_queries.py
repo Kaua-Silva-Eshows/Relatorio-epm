@@ -774,4 +774,6 @@ AND DATE(P.DATA_INICIO) <= '{day_artistAdvance2}'
 AND P.ADIANTAMENTO = '01'
 AND A.ID = '{id}'
 
+GROUP BY P.ID
+
 ORDER BY P.DATA_INICIO DESC """)
