@@ -729,8 +729,9 @@ def artist_advance(id, day_artistAdvance1, day_artistAdvance2):
 SELECT
     P.ID AS 'ID PROPOSTA',
     A.NOME AS ARTISTA,
+    C.NAME AS 'CASA',
     DATE_FORMAT(P.DATA_INICIO, '%d/%m') AS 'DATA SHOW',
-    DATE_FORMAT(PA.Primeira_Data_Adiantamento, '%d/%m') AS 'DATA ADIANTAMENTO',
+    DATE_FORMAT(PA.Primeira_Data_Adiantamento, '%d/%m') AS 'DATA PRIMEIRO ADIANTAMENTO',
     SF.DESCRICAO AS 'STATUS FINANCEIRO',
     P.VALOR_ARTISTA_A_RECEBER AS 'ARTISTA VALOR',
     P.VALOR_ESHOWS_RECEBIMENTO AS 'ESHOWS VALOR',
