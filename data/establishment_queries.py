@@ -347,7 +347,7 @@ def establishment_finances_closures(id):
     DATE_FORMAT(F.DATA_INICIO, '%d/%m/%Y') as "PERÍODO DE INÍCIO",
     DATE_FORMAT(F.DATA_FIM, '%d/%m/%Y') as "PERÍODO FIM",
     F.OBSERVACAO as "OBSERVAÇÃO DO FECHAMENTO",
-    DATE_FORMAT(F.PRAZO, '%d/%m/%Y') as "PRAZO",
+    DATE_FORMAT(F.PRAZO, '%d/%m/%Y') as "ABERTURA FECHAMENTO",
     CASE	
         WHEN CURDATE() > ADDDATE(F.PRAZO, 1) THEN "PASSOU DO PRAZO"
     ELSE "NO PRAZO"
