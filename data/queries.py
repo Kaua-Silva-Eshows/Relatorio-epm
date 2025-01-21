@@ -22,9 +22,10 @@ def search_companie_id(filter):
     TC.ID,
     TC.EMAIL,
     TC.NAME,
-    TC.PHONE
+    TC.PHONE,
+    TC.ADIANT_CASA
     FROM T_COMPANIES TC
-    """ +filter)
+    """ + filter)
 
     return result
 

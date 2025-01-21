@@ -42,11 +42,11 @@ def function_search_user(choose, search):
                     return search_companie_id(f"WHERE TC.ID LIKE '%{search}%'")
                 else:
                     return search_companie_id(f"WHERE TC.PHONE LIKE '%{search}%'")
+            elif '@' in search:
+                return search_companie_id(f"WHERE TC.EMAIL LIKE '%{search}%'")
             else:
-                if '@' in search:
-                    return search_companie_id(f"WHERE TC.EMAIL LIKE '%{search}%'")
-                else:
-                    return search_companie_id(f"WHERE TC.NAME LIKE '%{search}%'")
+                # Busca por nome e adiantamento simultaneamente
+                return search_companie_id(f"WHERE TC.NAME LIKE '%{search}%' OR TC.ADIANT_CASA LIKE '%{search}%'")
         return pd.DataFrame()
     except:
         return pd.DataFrame()

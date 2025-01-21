@@ -187,7 +187,7 @@ def searchUserDataComponent(choose, user):
                     st.rerun()
         
         elif choose == 'Contratante':
-            row1 = st.columns([1,3,2,2.5,0.5])
+            row1 = st.columns([1,2,2,2.5,2,0.5,0.5])
             with row1[0]:
                 st.markdown(f"<p style='text-align: center; margin-top: 1vh;'>Id: {str(user['ID'].loc[0])}</p>", unsafe_allow_html=True)
             with row1[1]:
@@ -197,11 +197,23 @@ def searchUserDataComponent(choose, user):
             with row1[3]:
                 st.markdown(f"<p style='text-align: center; margin-top: 1vh;'>Celular: {str(user['PHONE'].loc[0])}</p>", unsafe_allow_html=True)
             with row1[4]:
+                
+                search_result = search_companie_id(f"WHERE TC.ID LIKE '%{user['ID'].loc[0]}%'")
+                adiantamento = search_result['ADIANT_CASA'].iloc[0]
+                if adiantamento == 1:
+                    adiantamento = 'Sim'
+                else:
+                    adiantamento = 'Não'
+
+                st.markdown(f"<p style='text-align: center; margin-top: 1vh;'>Adiantamento: {adiantamento}</p>", unsafe_allow_html=True)
+        
+            with row1[5]:
                 if st.button('X'):
                     st.session_state['Search']['ID'] = None
                     st.session_state['Search']['NAME'] = None
                     st.session_state['Search']['EMAIL'] = None
                     st.session_state['Search']['PHONE'] = None
+                    st.session_state['Search']['ADIANT_CASA'] = None
                     st.session_state['Search']['TIPO'] = None
                     st.rerun()
 

@@ -32,7 +32,8 @@ if st.session_state['loggedIn']:
         'FULL_NAME' : None,
         'NOME' : None,
         'LOGIN' : None,
-        'CELULAR' : None
+        'CELULAR' : None,
+        'ADIANT_CASA' : None
         }
 
     # Header
